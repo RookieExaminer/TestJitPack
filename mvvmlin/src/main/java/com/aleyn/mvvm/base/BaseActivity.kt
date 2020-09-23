@@ -26,11 +26,14 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
     protected var mBinding: DB? = null
 
     private var dialog: MaterialDialog? = null
+    private var isTransparentStatusBar: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //沉浸式状态栏
-        BarUtils.transparentStatusBar(this)
+        //透明状态栏
+        if (isTransparentStatusBar()) {
+            BarUtils.transparentStatusBar(this)
+        }
         initViewDataBinding()
         lifecycle.addObserver(viewModel)
         //注册 UI事件
@@ -42,7 +45,9 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : AppCompa
     abstract fun layoutId(): Int
     abstract fun initView(savedInstanceState: Bundle?)
     abstract fun initData()
-
+    public fun isTransparentStatusBar(): Boolean {
+        return isTransparentStatusBar
+    }
 
     /**
      * DataBinding
