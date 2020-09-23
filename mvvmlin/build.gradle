@@ -1,0 +1,90 @@
+
+import com.hi.dhl.plugin.*
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+//配置Arouter
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+android {
+    compileSdkVersion BuildConfig.compileSdkVersion
+    buildToolsVersion BuildConfig.buildToolsVersion
+    defaultConfig {
+        minSdkVersion BuildConfig.minSdkVersion
+        targetSdkVersion BuildConfig.targetSdkVersion
+        versionCode BuildConfig.versionCode
+        versionName BuildConfig.versionName
+    }
+    dataBinding {
+        enabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation Depend.junit
+    androidTestImplementation Depend.androidTestJunit
+    androidTestImplementation Depend.espressoCore
+    //androidx
+    api Kt.stdlibJdk8
+    api AndroidX.coreKtx
+    api AndroidX.appcompat
+    api AndroidX.constraintlayout
+    api AndroidX.pagingRuntime
+    api AndroidX.cardview
+    api AndroidX.swiperefreshlayout
+    api AndroidX.appStartup
+    api AndroidX.extensions
+    api AndroidX.viewModelKtx
+    api AndroidX.annotation
+    api AndroidX.navigationFragment
+    api AndroidX.navigationUI
+    api AndroidX.navigationFragmentKtx
+    api AndroidX.navigationUIKtx
+    api Android.material
+
+    //network
+    api Retrofit.runtime
+    api Retrofit.gson
+    api Retrofit.logging
+
+    //material-dialogs
+    api Depend.materialDialogsLifecycle
+    api Depend.materialDialogsCore
+
+    //glide
+    api Depend.glide
+    kapt Depend.glideCompiler
+
+    // utils 集合了大量常用的工具类
+    api Depend.utilcodex
+    //Arouter
+    api Depend.arouter
+    kapt Depend.arouterCompiler
+    //banner
+    api Depend.banner
+    //BaseRecyclerViewAdapterHelper
+    api Depend.baseRecyclerViewAdapterHelper
+    //SmartRefreshLayout
+    api Depend.smartRefreshLayout
+    api Depend.smartRefreshLayoutHeader
+}
